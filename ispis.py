@@ -7,14 +7,22 @@ podvuceno = "\033[4m"
 plava = "\033[36m"
 bela = "\033[37m"
 
-def ispisi(sortirana, reci, top = 5):
+def ispisi(sortirana, reci, top = 5, dodatni = False):
     global kraj_boje, siva, crvena, podvuceno, plava, bela, tamno_plava
     brojac = 0
     if sortirana[0][0] > 0:
         brojac += 1
         print("\n-----Nabolji rezultat-----\n")
         print(f"{bela}{brojac}. {plava}{podvuceno}{sortirana[0][1].daj_stranu().daj_putanju()}{kraj_boje} {siva}---->{kraj_boje} {plava}{sortirana[0][0]} rang{kraj_boje}\n\n")
-        prikaz_najboljeg(sortirana[0][1], reci)
+        
+        strana = sortirana[0][1].daj_stranu()
+        if not dodatni:
+            pozicije = []
+            for rec in reci:
+                pozicije.extend(strana.daj_trie().daj_pozicije_reci(rec.strip()))
+        else:
+            pozicije = sortirana[0][2]
+        prikaz_najboljeg(strana, reci, pozicije, dodatni)
         print("\n\n-----Ostali-----\n")
         for evaluacija in sortirana[1:]:
             if brojac == top:
@@ -46,12 +54,7 @@ def prikazi_jos_5(sortirana, top = 5):
             if evaluacija[0] > 0:
                 print(f"{bela}{brojac}. {plava}{podvuceno}{evaluacija[1].daj_stranu().daj_putanju()}{kraj_boje} {siva}---->{kraj_boje} {plava}{evaluacija[0]} rang{kraj_boje}")
 
-def prikaz_najboljeg(evaluacija, reci):
-    global bela, crvena, kraj_boje
-    strana = evaluacija.daj_stranu()
-    pozicije = []
-    for rec in reci:
-        pozicije.extend(strana.daj_trie().daj_pozicije_reci(rec.strip()))
+def prikaz_najboljeg(strana, reci, pozicije, dodatni):
     sve_reci = strana.daj_reci()
     pocetak = pozicije[0]
     broj = random.randint(0, 10)
@@ -61,11 +64,22 @@ def prikaz_najboljeg(evaluacija, reci):
             break
     if pocetak - broj >= 0:
         pocetak = pocetak-broj
-    print(sve_reci[pozicije[0]])
-    print(pozicije)
-    for rec in sve_reci[pocetak: pocetak + 60]:
-        for trazi in reci:
-            if trazi.strip().lower() == rec.lower():
-                print(f"{crvena}{rec}{kraj_boje} ", end="")
+    if not dodatni:
+        for i in range(60):
+            for trazi in reci:
+                if trazi.strip().lower() == sve_reci[pocetak+i].lower():
+                    print(f"{crvena}{sve_reci[pocetak+i]}{kraj_boje} ", end="")
+                else:
+                    print(f"{bela}{sve_reci[pocetak+i]}{kraj_boje} ", end="") 
+    else:
+        i = 0
+        while i != 60:
+            if pocetak + i in pozicije:
+                for j in range(len(reci)):
+                    print(f"{crvena}{sve_reci[pocetak+j+i]}{kraj_boje} ", end="")
+                i += j
             else:
-                print(f"{bela}{rec}{kraj_boje} ", end="")  
+                print(f"{bela}{sve_reci[pocetak+i]}{kraj_boje} ", end="")
+            i += 1
+                
+

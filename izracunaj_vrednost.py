@@ -16,7 +16,13 @@ class Evaluacija:
 
     
 def sredi_unos(rec, za_pretraziti):
-    if "AND" in rec:
+    if "\"" in rec:
+        reci = rec.replace("\"", "").split(" ")
+        if len(reci) > 1:
+            odredi_rang_izraza(reci, za_pretraziti)
+        else:
+            odredi_rang_rec(reci[0], za_pretraziti)
+    elif "AND" in rec:
         odredi_rang_and(rec.split("AND"), za_pretraziti)
     elif "NOT" in rec:
         odredi_rang_not(rec.split("NOT"), za_pretraziti)
@@ -118,6 +124,7 @@ def odredi_rang_rec(rec, za_pretraziti):
         sortirana = sort(lista_evaluacija)
         ispisi(sortirana, [rec])
 
+
 def daj_sve_cvorove(putanja):
     if "/Volumes/SSD/Fakultet/Semestar 2/Algoritmi i strukture podataka/Projekat2/python-docs" not in putanja:
         print("Morate izabrati direktorijum unutar python-docs")
@@ -149,3 +156,53 @@ def bitna_linkovanja(strana, rec):
 
 
 
+
+########BONUS##########
+def odredi_rang_izraza(lista_reci, za_pretraziti):
+    lista_evaluacija = []
+    for strana in za_pretraziti:
+        pozicije = pozicije_pojavljivanja(strana, lista_reci)
+        broj_pojavljivanja = len(pozicije)
+        if broj_pojavljivanja == 0:
+            continue
+        bit_linkovanja = bitna_linkovanja_izraza(strana, lista_reci)
+        ukupno = broj_pojavljivanja * 5 + bit_linkovanja + broj_linkovanja(strana)
+        lista_evaluacija.append([ukupno, Evaluacija(strana, ukupno), pozicije])
+    if lista_evaluacija == []:
+        print("Rec ne postoji u zadatom direktorijumu")
+    else:
+        sortirana = sort(lista_evaluacija)
+        print(sortirana)
+        ispisi(sortirana, lista_reci, dodatni=True)
+
+def pozicije_pojavljivanja(strana, lista_reci):
+    lista_pojavljivanja = []
+    for rec in lista_reci:
+        lista = strana.daj_trie().daj_pozicije_reci(rec.strip())
+        if lista == []:
+            return []
+        else:
+            lista_pojavljivanja.append(lista)
+    else:
+        return broj_pojavljivanja_izraza(lista_pojavljivanja)
+
+def bitna_linkovanja_izraza(strana, lista_reci):
+    ukupno = 0
+    sve_koje_linkuju = ucitaj_graf.graf.grane_dolaze(strana)
+    for s in sve_koje_linkuju:
+        ukupno += len(pozicije_pojavljivanja(s, lista_reci))
+    return ukupno//2
+
+def broj_pojavljivanja_izraza(lista_pojavljivanja):
+    pozicija = []
+    for br in lista_pojavljivanja[0]:
+        if sledeci(br, lista_pojavljivanja[1:]):
+            pozicija.append(br)
+    return pozicija
+
+def sledeci(broj, lista):
+    if len(lista) == 1 and broj + 1 in lista[0]:
+        return True
+    if broj + 1 in lista[0]:
+        return True and sledeci(broj+1, lista[1:])
+    return False
