@@ -1,8 +1,11 @@
 from ucitaj_graf import ucitaj_graf
-from izracunaj_vrednost import daj_sve_cvorove, odredi_rang
+from izracunaj_vrednost import daj_sve_cvorove, sredi_unos
 from timeit import default_timer as timer
 
+trenutni_cvorovi = []
+
 def ispisi_pocetne_mogucnosti():
+    global trenutni_cvorovi
     mogucnosti = '''
 ---------PRETRAGA---------
 
@@ -25,14 +28,16 @@ def ispisi_pocetne_mogucnosti():
             while not dobro:
                 rec = input("Unesite rec za pretragu -> ")
                 dobro = True
-            odredi_rang(rec, za_pretraziti[1])
-            ispisi_mogucnosti(za_pretraziti[1])
+                trenutni_cvorovi = za_pretraziti[1]
+            sredi_unos(rec, trenutni_cvorovi)
+            ispisi_mogucnosti()
             return False
     else:
         return True
 
 
-def ispisi_mogucnosti(putanja):
+def ispisi_mogucnosti():
+    global trenutni_cvorovi
     mogucnosti ='''
 ---------PRETRAGA---------
 
@@ -46,16 +51,15 @@ def ispisi_mogucnosti(putanja):
         print("Potrebno je izabrati jednu od ponudjenih opcija")
         izabrano = input("Izaberite opciju -> ");
     if izabrano == "1":
-        putanja = putanja
         #uradi
         dobro = False
         while not dobro:
             rec = input("Unesite rec za pretragu -> ")
             dobro = True
-        odredi_rang(rec, putanja)
-        ispisi_mogucnosti(putanja)
+        sredi_unos(rec, trenutni_cvorovi)
+        ispisi_mogucnosti()
         return False
-    elif izabrano == 2:
+    elif izabrano == "2":
         dobro = False
         while not dobro:
             putanja = input("Unesite putanju za pretragu -> ")
@@ -66,11 +70,12 @@ def ispisi_mogucnosti(putanja):
             while not dobro:
                 rec = input("Unesite rec za pretragu -> ")
                 dobro = True
-            odredi_rang(rec, za_pretraziti[1])
-            ispisi_mogucnosti(putanja)
+            trenutni_cvorovi = za_pretraziti[1]
+            sredi_unos(rec, trenutni_cvorovi)
+            ispisi_mogucnosti()
             return False
     else:
-        return True
+        raise SystemExit(0)
 
 
 def start():

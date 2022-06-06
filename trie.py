@@ -57,22 +57,18 @@ class Trie:
                 trenutni_cvor = novi_cvor
 
     def daj_pozicije_reci(self, rec):
+        rec = rec.lower()
         trenutni_cvor = self._koren
-        for slovo in rec:
-            if slovo != rec[-1]:
-                if slovo in trenutni_cvor.daj_decu():
-                    trenutni_cvor = trenutni_cvor.daj_cvor(slovo)
+        for i in range(len(rec)):
+            if i != len(rec) - 1:
+                if rec[i] in trenutni_cvor.daj_decu():
+                    trenutni_cvor = trenutni_cvor.daj_cvor(rec[i])
                 else:
                     return []
             else:
-                if slovo in trenutni_cvor.daj_decu():
-                    trenutni_cvor = trenutni_cvor.daj_cvor(slovo)
+                if rec[i] in trenutni_cvor.daj_decu():
+                    trenutni_cvor = trenutni_cvor.daj_cvor(rec[i])
                     recnik = trenutni_cvor.daj_pozicije()
                     return [el for el, vrednost in recnik.items() if vrednost == True]
-
-
-
-                
-
-
-
+                else:
+                    return []

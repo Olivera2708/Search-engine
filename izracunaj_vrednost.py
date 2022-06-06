@@ -14,9 +14,96 @@ class Evaluacija:
     def daj_stranu(self):
         return self._strana
 
-def odredi_rang(rec, za_pretraziti):
-    za_pretraziti = za_pretraziti
+    
+def sredi_unos(rec, za_pretraziti):
+    if "AND" in rec:
+        odredi_rang_and(rec.split("AND"), za_pretraziti)
+    elif "NOT" in rec:
+        odredi_rang_not(rec.split("NOT"), za_pretraziti)
+    elif "OR" in rec:
+        odredi_rang_or(rec.split("OR"), za_pretraziti)
+    elif " " in rec:
+        odredi_rang_reci(rec.split(" "), za_pretraziti)
+    else:
+        odredi_rang_rec(rec, za_pretraziti)
 
+def odredi_rang_not(lista_reci, za_pretraziti):
+    lista_evaluacija = []
+    for strana in za_pretraziti:
+        br_pojavljivanja1 = broj_pojavljivanja(strana, lista_reci[0].strip())
+        br_pojavljivanja2 = broj_pojavljivanja(strana, lista_reci[1].strip())
+        if (br_pojavljivanja1 == 0):
+            continue
+        elif (br_pojavljivanja2 == 0):
+            vrednost = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip()) + broj_linkovanja(strana)
+            lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
+    if lista_evaluacija == []:
+        print("Ne postoji fajl koji sadzi prvu rec a ne sadrzi drugu rec")
+    else:
+        sortirana = sort(lista_evaluacija)
+        ispisi(sortirana, lista_reci)
+
+def odredi_rang_and(lista_reci, za_pretraziti):
+    lista_evaluacija = []
+    for strana in za_pretraziti:
+        br_pojavljivanja1 = broj_pojavljivanja(strana, lista_reci[0].strip())
+        if br_pojavljivanja1 == 0:
+            continue
+        br_pojavljivanja2 = broj_pojavljivanja(strana, lista_reci[1].strip())
+        if br_pojavljivanja2 == 0:
+            continue
+        else:
+            vrednost1 = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip())
+            vrednost2 = br_pojavljivanja2 + bitna_linkovanja(strana, lista_reci[1].strip())
+            vrednost = vrednost1//2 + vrednost2//2 + broj_linkovanja(strana)
+        lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
+    if lista_evaluacija == []:
+        print("Ne postoji fajl koji sadzi obe reci")
+    else:
+        sortirana = sort(lista_evaluacija)
+        ispisi(sortirana, lista_reci)
+
+def odredi_rang_reci(lista_reci, za_pretraziti):
+    lista_evaluacija = []
+    for strana in za_pretraziti:
+        br_pojavljivanja = 0
+        bit_linkovanja = 0
+        for rec in lista_reci:
+            br_pojavljivanja += broj_pojavljivanja(strana, rec)
+            bit_linkovanja += bitna_linkovanja(strana, rec)
+        if br_pojavljivanja == 0:
+            continue
+        else:
+            vrednost = broj_pojavljivanja(strana, rec)//len(lista_reci) + broj_linkovanja(strana) + bitna_linkovanja(strana, rec)//len(lista_reci)
+        lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
+    if lista_evaluacija == []:
+        print("Reci ne postoje u zadatom direktorijumu")
+    else:
+        sortirana = sort(lista_evaluacija)
+        ispisi(sortirana, lista_reci)
+
+def odredi_rang_or(lista_reci, za_pretraziti):
+    lista_evaluacija = []
+    for strana in za_pretraziti:
+        br_pojavljivanja1 = broj_pojavljivanja(strana, lista_reci[0].strip())
+        br_pojavljivanja2 = broj_pojavljivanja(strana, lista_reci[1].strip())
+        if br_pojavljivanja2 == 0 and br_pojavljivanja2 == 0:
+            continue
+        else:
+            vrednost1 = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip())
+            vrednost2 = br_pojavljivanja2 + bitna_linkovanja(strana, lista_reci[1].strip())
+            if vrednost1 > vrednost2:
+                vrednost = vrednost1 + broj_linkovanja(strana)
+            else:
+                vrednost = vrednost2 + broj_linkovanja(strana)
+        lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
+    if lista_evaluacija == []:
+        print("Ni jedna od reci ne postoji u zadatom direktorijumu")
+    else:
+        sortirana = sort(lista_evaluacija)
+        ispisi(sortirana, lista_reci)
+
+def odredi_rang_rec(rec, za_pretraziti):
     lista_evaluacija = []
     for strana in za_pretraziti:
         br_pojavljivanja = broj_pojavljivanja(strana, rec)
@@ -29,9 +116,12 @@ def odredi_rang(rec, za_pretraziti):
         print("Rec ne postoji u zadatom direktorijumu")
     else:
         sortirana = sort(lista_evaluacija)
-        ispisi(sortirana)
+        ispisi(sortirana, [rec])
 
 def daj_sve_cvorove(putanja):
+    if "/Volumes/SSD/Fakultet/Semestar 2/Algoritmi i strukture podataka/Projekat2/python-docs" not in putanja:
+        print("Morate izabrati direktorijum unutar python-docs")
+        return False, []
     lista_fajlova = [fajl for fajl in iglob(f"{putanja}/**/*.html", recursive=True)]
     za_pretraziti = [ucitaj_graf.graf.daj_cvor(putanja) for putanja in lista_fajlova] #uzmi samo odredjene cvorove
 
@@ -40,7 +130,6 @@ def daj_sve_cvorove(putanja):
         return False, []
     else:
         return True, za_pretraziti
-
 
 def broj_pojavljivanja(strana, rec):
     try:
@@ -60,54 +149,3 @@ def bitna_linkovanja(strana, rec):
 
 
 
-
-
-# class Vrednost:
-#     def __init__(self, strana, vrednost, pozicije):
-#         self._strana = strana
-#         self._vrednost = vrednost
-#         self._pozicije = pozicije
-
-#     def vrednost(self):
-#         return self._vrednost
-
-#     def pozicije(self):
-#         return self._pozicije
-
-#     def strana(self):
-#         return self._strana
-
-#     def dodaj_pozicije(self, pozicije):
-#         self._pozicije = pozicije
-
-#     def dodaj_vrednost(self, vrednost):
-#         self._vrednost = vrednost
-
-# def broj_pojavljivanja(strana, rec):
-#     return len(strana.daj_pozicije(rec))
-
-# def broj_linkovanja(strana):
-#     return ucitaj_graf.graf.broj_linkovanja(strana)
-
-# def relevantnost_strane(strana, rec):
-#     return ucitaj_graf.graf.relevantnost(strana, rec) #vraca recnik
-
-# def vrednost(strana, rec):
-#     pojavljivanje = broj_pojavljivanja(strana, rec)
-#     linkovanje = broj_linkovanja(strana)
-#     relevantnost = relevantnost_strane(strana, rec)
-
-#     v = list(relevantnost.values())
-#     k = list(relevantnost.keys())
-#     ukupno = pojavljivanje + linkovanje + max(v)
-#     print(ukupno)
-#     return ukupno
-
-# def pretrazi(rec, ispis = 10):
-#     lista_vrednosti = []
-#     for strana in ucitaj_graf.graf.cvorovi():
-#         ukupno = vrednost(strana, rec)
-#         lista_vrednosti.append(Vrednost(strana, ukupno, strana.daj_poziciju_reci(rec)))
-
-#     print(lista_vrednosti)
-#     #uradi neki sort pa ispisi prvih 10 npr
