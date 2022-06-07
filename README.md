@@ -7,9 +7,11 @@ Grane sluze kako bih povezala cvorove medjusobno (preko linkova).
 
 ## Trie
 Sastoji se od cvorova.
-Svaki cvor ima karakter, decu i pozicije (na kom mestu u listi reci se nalazi ova rec).
+Svaki cvor ima karakter, decu i pozicije (na kom mestu u listi reci se nalazi slovo koje cini ovu rec).
+
 Upisivanje:
 Za svaku rec idem slovo po slovo, gledam da li postoji vec cvor sa tim slovom, ako postoji cuvam poziciju i idem dalje, ako je postoji pravim cvor sa tim slovom, povezujem ga sa cvorom iznad i cuvam poziciju.
+
 Citanje:
 Za svaku rec idem po slovima, ako naidjem da nema cvora koji ima slovo na redu, onda se rec ne nalazi na zadatoj strani, ako dodjem do poslednjeg slova, proverim jel njega ima, ako ima onda vracam pozicije svih pojavljivanja date reci.
 
