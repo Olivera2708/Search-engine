@@ -41,10 +41,8 @@ class Graf:
       return '({0}, {1})'.format(self._izvor, self._destinacija)
     
   def __init__(self):
-    # self._izlaze = LinearHashMap()
-    # self._dolaze = LinearHashMap()
-    self._izlaze = {}
-    self._dolaze = {}
+    self._izlaze = LinearHashMap()
+    self._dolaze = LinearHashMap()
 
   def _jel_postoji_cvor(self, v):
     if not isinstance(v, self.Cvor):
@@ -77,17 +75,10 @@ class Graf:
   def grane_dolaze(self, v):
     return list(self._dolaze[v].keys())
 
-  # def relevantnost(self, v, rec):
-  #   strane = LinearHashMap()
-  #   for linkuje in self._dolaze[v]:
-  #     #broj reci u linkovanoj strani
-  #     strane[linkuje] = len(linkuje.daj_pozicije(rec))
-  #   return strane
-
   def dodaj_cvor(self, putanja, reci):
     v = self.Cvor(putanja, reci)
-    self._izlaze[v] = {}
-    self._dolaze[v] = {}
+    self._izlaze[v] = LinearHashMap(80)
+    self._dolaze[v] = LinearHashMap(80)
     return v
       
   def dodaj_granu(self, u, v):

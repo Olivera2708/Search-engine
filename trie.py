@@ -1,14 +1,18 @@
-from hashmap import LinearHashMap
+from hashmap import HashMap, LinearHashMap
 
 class Trie:
     class Cvor:
-        def __init__(self, karakter = "", dubina= 0):
+        def __init__(self, karakter = "", dubina = 0):
             self._karakter = karakter
-            #cuvam kljuc poziciju, vrednost bool (da li je kraj reci)
-            self._pozicije = {}
+            #cuvam pozicije [pozicija, vrednost] - vrednost je True ili False, da li je kraj reci
+            self._pozicije = []
             #cuvam kljuc karakter, vrednost cvor
-            # self._deca = LinearHashMap(100//(dubina + 1) + 2)
-            self._deca = {}
+            if dubina == 0:
+                self._deca = LinearHashMap(90)
+            if dubina == 1:
+                self._deca = LinearHashMap(24)
+            else:
+                self._deca = LinearHashMap(5)
 
         def daj_karakter(self):
             return self._karakter
@@ -18,13 +22,12 @@ class Trie:
 
         def dodaj_dete(self, cvor):
             self._deca[cvor.daj_karakter()] = cvor
-            # self._deca.append(cvor)
 
         def daj_pozicije(self):
             return self._pozicije
 
         def dodaj_poziciju(self, pozicija, kraj):
-            self._pozicije[pozicija] = kraj
+            self._pozicije.append([pozicija, kraj])
 
         def daj_cvor(self, slovo):
             return self._deca[slovo]
@@ -33,6 +36,11 @@ class Trie:
         self._koren = self.Cvor()
         self._reci = reci
         self._dodaj_reci()
+
+####TEST
+    def daj_koren(self):
+        return self._koren
+        #####
 
     def _dodaj_reci(self):
         for pozicija in range(len(self._reci)):
@@ -68,7 +76,7 @@ class Trie:
             else:
                 if rec[i] in trenutni_cvor.daj_decu():
                     trenutni_cvor = trenutni_cvor.daj_cvor(rec[i])
-                    recnik = trenutni_cvor.daj_pozicije()
-                    return [el for el, vrednost in recnik.items() if vrednost == True]
+                    pozicije = trenutni_cvor.daj_pozicije()
+                    return [el[0] for el in pozicije if el[1] == True]
                 else:
                     return []
