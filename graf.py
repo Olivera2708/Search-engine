@@ -7,6 +7,9 @@ class Graf:
       self._putanja = putanja
       self._reci = reci
       self._trie = Trie(reci)
+      # print(len(self._trie.daj_koren().daj_decu().values()))
+      # for e in self._trie.daj_koren().daj_decu().values():
+      #   print(len(e.daj_decu().values()))
 
     def daj_trie(self):
       return self._trie
