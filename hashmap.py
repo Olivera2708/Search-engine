@@ -17,7 +17,7 @@ class HashMap(object):
 
     def _hash(self, x):
         if isinstance(x, str):
-            return ord(x) % self._capacity
+            return ord(x)//2 % self._capacity
         hashed_value = (hash(x)*self._a + self._b) % self.prime
         return hashed_value % self._capacity
 
