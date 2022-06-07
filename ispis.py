@@ -64,13 +64,13 @@ def prikaz_najboljeg(strana, reci, pozicije, dodatni):
             break
     if pocetak - broj >= 0:
         pocetak = pocetak-broj
+    sredjenje_reci = [rec.lower().strip() for rec in reci]
     if not dodatni:
         for i in range(60):
-            for trazi in reci:
-                if trazi.strip().lower() == sve_reci[pocetak+i].lower():
-                    print(f"{crvena}{sve_reci[pocetak+i]}{kraj_boje} ", end="")
-                else:
-                    print(f"{bela}{sve_reci[pocetak+i]}{kraj_boje} ", end="") 
+            if sve_reci[pocetak+i].lower() in sredjenje_reci:
+                print(f"{crvena}{sve_reci[pocetak+i]}{kraj_boje} ", end="")
+            else:
+                print(f"{bela}{sve_reci[pocetak+i]}{kraj_boje} ", end="") 
     else:
         i = 0
         while i != 60:
