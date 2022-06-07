@@ -39,6 +39,7 @@ def ispisi_pocetne_mogucnosti():
 def ispisi_mogucnosti():
     global trenutni_cvorovi
     mogucnosti ='''
+    
 ---------PRETRAGA---------
 
 1. Nova pretraga
