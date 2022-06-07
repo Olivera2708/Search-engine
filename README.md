@@ -22,22 +22,27 @@ Koriscen je merge sort, prilagodjen za listu listi.
 
 ## Pretraga
 1. Rec
+
 Za unesenu rec uzmem broj pojavljivanja reci u dokumentu, broj linkovanja na dokument, kao i broj pojavljivanja reci u dokumentu koji ga linkuje, poslednji broj delim sa 8.
 Sabiranjem tri dobijena broja dobijam rang.
 
 2. Reci odvojene razmakom
+
 Za svaku rec izracunam rang, kao u 1. i podelim sa brojem reci. 
 Na taj nacin dobijam rang. 
 
 3. Operator NOT
+
 Za prvu rec proverim da li je ima u fajlu, ako nema preskacem ga. Ako ima provaravam da li druge reci ima u fajlu, ako ima preskacem, ako nema racunam rang kao u 1. slucaju. 
 
 4. Operator AND
+
 Proveravam da li su obe reci u fajlu, ako jesu racunam rang obe reci odvojeno i rezultate saberem i podelim sa 2.
 
 5. Operator OR
+
 Slicno kao 2. samo se rang racuna na osnovu reci koje ima vise u fajlu.
 
 # Dodatni zadatak (pretraga izraza)
 Za svaku rec vrati pozicije pojavljivanja. 
-Proveravam rekurzivno da li postoji neki broj u poziciji prve reci, tako da se broj+1 nalazi u poziciji druge reci, pa analogno za ostale reci. 
+Proveravam rekurzivno da li postoji neki broj u pozicijama pojavljivanja prve reci, tako da se broj+1 nalazi u poziciji pojavljivanja druge reci, pa analogno za ostale reci i pozicije. 
