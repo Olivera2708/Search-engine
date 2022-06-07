@@ -48,18 +48,19 @@ class Trie:
 
     def _dodaj(self, rec, pozicija):
         trenutni_cvor = self._koren
-        for index in range(len(rec)):
+        duzina_reci = len(rec)
+        for index, slovo in enumerate(rec):
             kraj = False
-            if index == len(rec)-1:
+            if index == duzina_reci-1:
                 kraj = True
-            if rec[index] in trenutni_cvor.daj_decu():
+            try:
                 #ako imamo onda dodamo poziciju i prelazimo na sledece
-                ima_cvor = trenutni_cvor.daj_cvor(rec[index])
+                ima_cvor = trenutni_cvor.daj_cvor(slovo)
                 ima_cvor.dodaj_poziciju(pozicija, kraj)
                 trenutni_cvor = ima_cvor
-            else:
+            except:
                 #ako nemamo ovo slovo napravimo ga i prelazimo na sledece
-                novi_cvor = self.Cvor(rec[index], index)
+                novi_cvor = self.Cvor(slovo, index)
                 novi_cvor.dodaj_poziciju(pozicija, kraj)
                 trenutni_cvor.dodaj_dete(novi_cvor)
                 trenutni_cvor = novi_cvor
@@ -67,16 +68,17 @@ class Trie:
     def daj_pozicije_reci(self, rec):
         rec = rec.lower()
         trenutni_cvor = self._koren
-        for i in range(len(rec)):
-            if i != len(rec) - 1:
-                if rec[i] in trenutni_cvor.daj_decu():
-                    trenutni_cvor = trenutni_cvor.daj_cvor(rec[i])
-                else:
+        duzina_reci = len(rec)
+        for i, slovo in enumerate(rec):
+            if i != duzina_reci - 1:
+                try:
+                    trenutni_cvor = trenutni_cvor.daj_cvor(slovo)
+                except:
                     return []
             else:
-                if rec[i] in trenutni_cvor.daj_decu():
-                    trenutni_cvor = trenutni_cvor.daj_cvor(rec[i])
+                try:
+                    trenutni_cvor = trenutni_cvor.daj_cvor(slovo)
                     pozicije = trenutni_cvor.daj_pozicije()
                     return [el[0] for el in pozicije if el[1] == True]
-                else:
+                except:
                     return []
