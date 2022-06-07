@@ -1,16 +1,10 @@
-import random
 from map import MapElement
 
 class HashMap(object):
-    def __init__(self, capacity=800):
+    def __init__(self, capacity=400):
         self._data = capacity * [None]
         self._capacity = capacity
         self._size = 0
-        self.prime = 109345121
-
-        # konstante heširanja
-        self._a = 1 + random.randrange(self.prime-1)
-        self._b = random.randrange(self.prime)
 
     def __len__(self):
         return self._size
@@ -18,8 +12,7 @@ class HashMap(object):
     def _hash(self, x):
         if isinstance(x, str):
             return ord(x) % self._capacity
-        hashed_value = (hash(x)*self._a + self._b) % self.prime
-        return hashed_value % self._capacity
+        return hash(x) % self._capacity
 
     def _resize(self, capacity):
         old_data = list(self.items())

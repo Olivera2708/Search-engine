@@ -7,9 +7,6 @@ class Graf:
       self._putanja = putanja
       self._reci = reci
       self._trie = Trie(reci)
-      # print(len(self._trie.daj_koren().daj_decu().values()))
-      # for e in self._trie.daj_koren().daj_decu().values():
-      #   print(len(e.daj_decu().values()))
 
     def daj_trie(self):
       return self._trie
@@ -80,8 +77,8 @@ class Graf:
 
   def dodaj_cvor(self, putanja, reci):
     v = self.Cvor(putanja, reci)
-    self._izlaze[v] = LinearHashMap(80)
-    self._dolaze[v] = LinearHashMap(80)
+    self._izlaze[v] = LinearHashMap(70)
+    self._dolaze[v] = LinearHashMap(70)
     return v
       
   def dodaj_granu(self, u, v):

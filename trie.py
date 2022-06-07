@@ -8,13 +8,13 @@ class Trie:
             self._pozicije = []
             #cuvam kljuc karakter, vrednost cvor
             if dubina == -1:
-                self._deca = LinearHashMap(52)
+                self._deca = LinearHashMap(52) #najbolje 52
             elif dubina == 0:
-                self._deca = LinearHashMap(34)
+                self._deca = LinearHashMap(26) #najbolje 26
             elif dubina == 1:
-                self._deca = LinearHashMap(16)
+                self._deca = LinearHashMap(16) #najbolje 16
             else:
-                self._deca = LinearHashMap(10)
+                self._deca = LinearHashMap(4) #najbolje 4
 
         def daj_karakter(self):
             return self._karakter
@@ -62,7 +62,7 @@ class Trie:
                 trenutni_cvor = ima_cvor
             except:
                 #ako nemamo ovo slovo napravimo ga i prelazimo na sledece
-                novi_cvor = self.Cvor(slovo, index) #len(trenutni_cvor.daj_decu()
+                novi_cvor = self.Cvor(slovo, index)
                 novi_cvor.dodaj_poziciju(pozicija, kraj)
                 trenutni_cvor.dodaj_dete(novi_cvor)
                 trenutni_cvor = novi_cvor
@@ -84,11 +84,3 @@ class Trie:
                     return [el[0] for el in pozicije if el[1] == True]
                 except:
                     return []
-
-
-# trie = Trie(["kolicina", "sta", "kako"])
-# print(trie.daj_koren().daj_karakter())
-# for el in trie.daj_koren().daj_decu().values():
-#     print(el.daj_karakter())
-#     for e in el.daj_decu().values():
-#         print(e.daj_karakter())
