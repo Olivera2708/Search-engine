@@ -2,7 +2,6 @@ from parser import Parser
 from glob import iglob
 import os
 from graf import Graf
-from timeit import default_timer as timer
 
 graf = Graf()
 
