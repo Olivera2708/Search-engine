@@ -15,10 +15,6 @@ Za svaku rec idem slovo po slovo, gledam da li postoji vec cvor sa tim slovom, a
 Citanje:
 Za svaku rec idem po slovima, ako naidjem da nema cvora koji ima slovo na redu, onda se rec ne nalazi na zadatoj strani, ako dodjem do poslednjeg slova, proverim jel njega ima, ako ima onda vracam pozicije svih pojavljivanja date reci.
 
-## Hesmapa
-Ako je kljuc karakter, onda hes funkciju pravim uz pomoc ascii vrednosti karaktera. 
-Inace samo pozivam hash(x).
-
 ## Sortiranje
 Koriscen je merge sort, prilagodjen za listu listi.
 
@@ -43,7 +39,7 @@ Proveravam da li su obe reci u fajlu, ako jesu racunam rang obe reci odvojeno i 
 
 5. Operator OR
 
-Slicno kao 2. samo se rang racuna na osnovu reci koje ima vise u fajlu.
+Isto kao 2.
 
 # Dodatni zadatak (pretraga izraza)
 Za svaku rec vrati pozicije pojavljivanja. 
