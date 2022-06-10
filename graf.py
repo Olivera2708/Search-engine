@@ -1,4 +1,3 @@
-from hashmap import LinearHashMap
 from trie import Trie
 
 class Graf:
@@ -41,8 +40,8 @@ class Graf:
       return '({0}, {1})'.format(self._izvor, self._destinacija)
     
   def __init__(self):
-    self._izlaze = LinearHashMap()
-    self._dolaze = LinearHashMap()
+    self._izlaze = {}
+    self._dolaze = {}
 
   def _jel_postoji_cvor(self, v):
     if not isinstance(v, self.Cvor):
@@ -77,8 +76,8 @@ class Graf:
 
   def dodaj_cvor(self, putanja, reci):
     v = self.Cvor(putanja, reci)
-    self._izlaze[v] = LinearHashMap(70)
-    self._dolaze[v] = LinearHashMap(70)
+    self._izlaze[v] = {}
+    self._dolaze[v] = {}
     return v
       
   def dodaj_granu(self, u, v):

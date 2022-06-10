@@ -11,8 +11,6 @@ def ucitaj_graf():
     parser = Parser()
     lista = []
 
-    ukupno = 0
-
     #u mapu dodamo kao kljuc cvor, a linkove kao vrednost
     for fajl in lista_fajlova:
         linkovi, reci = parser.parse(fajl)

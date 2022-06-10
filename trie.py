@@ -1,5 +1,3 @@
-from hashmap import LinearHashMap
-
 class Trie:
     class Cvor:
         def __init__(self, karakter = "", dubina = 0):
@@ -7,14 +5,7 @@ class Trie:
             #cuvam pozicije [pozicija, vrednost] - vrednost je True ili False, da li je kraj reci
             self._pozicije = []
             #cuvam kljuc karakter, vrednost cvor
-            if dubina == -1:
-                self._deca = LinearHashMap(52) #najbolje 52
-            elif dubina == 0:
-                self._deca = LinearHashMap(26) #najbolje 26
-            elif dubina == 1:
-                self._deca = LinearHashMap(16) #najbolje 16
-            else:
-                self._deca = LinearHashMap(4) #najbolje 4
+            self._deca = {}
 
         def daj_karakter(self):
             return self._karakter

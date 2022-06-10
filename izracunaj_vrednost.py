@@ -27,7 +27,7 @@ def sredi_unos(rec, za_pretraziti):
     elif "NOT" in rec:
         odredi_rang_not(rec.split("NOT"), za_pretraziti)
     elif "OR" in rec:
-        odredi_rang_or(rec.split("OR"), za_pretraziti)
+        odredi_rang_reci(rec.split(" OR "), za_pretraziti)
     elif " " in rec:
         odredi_rang_reci(rec.split(" "), za_pretraziti)
     else:
@@ -84,27 +84,6 @@ def odredi_rang_reci(lista_reci, za_pretraziti):
         lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
     if lista_evaluacija == []:
         print("Reci ne postoje u zadatom direktorijumu")
-    else:
-        sortirana = sort(lista_evaluacija)
-        ispisi(sortirana, lista_reci)
-
-def odredi_rang_or(lista_reci, za_pretraziti):
-    lista_evaluacija = []
-    for strana in za_pretraziti:
-        br_pojavljivanja1 = broj_pojavljivanja(strana, lista_reci[0].strip())
-        br_pojavljivanja2 = broj_pojavljivanja(strana, lista_reci[1].strip())
-        if br_pojavljivanja2 == 0 and br_pojavljivanja2 == 0:
-            continue
-        else:
-            vrednost1 = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip())
-            vrednost2 = br_pojavljivanja2 + bitna_linkovanja(strana, lista_reci[1].strip())
-            if vrednost1 > vrednost2:
-                vrednost = vrednost1 + broj_linkovanja(strana)
-            else:
-                vrednost = vrednost2 + broj_linkovanja(strana)
-        lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
-    if lista_evaluacija == []:
-        print("Ni jedna od reci ne postoji u zadatom direktorijumu")
     else:
         sortirana = sort(lista_evaluacija)
         ispisi(sortirana, lista_reci)
