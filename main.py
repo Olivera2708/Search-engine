@@ -1,6 +1,5 @@
 from ucitaj_graf import ucitaj_graf
 from izracunaj_vrednost import daj_sve_cvorove, sredi_unos
-from timeit import default_timer as timer
 
 trenutni_cvorovi = []
 
@@ -81,10 +80,7 @@ def ispisi_mogucnosti():
 
 def start():
     #parsiraj fajlove
-    start = timer()
     ucitaj_graf()
-    end = timer()
-    print(end-start)
     #pokreni
     kraj = False
     while not kraj:

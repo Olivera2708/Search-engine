@@ -151,7 +151,6 @@ def odredi_rang_izraza(lista_reci, za_pretraziti):
         print("Rec ne postoji u zadatom direktorijumu")
     else:
         sortirana = sort(lista_evaluacija)
-        print(sortirana)
         ispisi(sortirana, lista_reci, dodatni=True)
 
 def pozicije_pojavljivanja(strana, lista_reci):
