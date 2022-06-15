@@ -11,7 +11,7 @@ def ucitaj_graf():
     parser = Parser()
     lista = []
 
-    #u mapu dodamo kao kljuc cvor, a linkove kao vrednost
+    #u list dodamo cvor i linkove
     for fajl in lista_fajlova:
         linkovi, reci = parser.parse(fajl)
         dodaj_cvor = graf.dodaj_cvor(os.path.abspath(fajl), reci) 
