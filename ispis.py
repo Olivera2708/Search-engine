@@ -19,7 +19,10 @@ def ispisi(sortirana, reci, top = 5, dodatni = False):
         if not dodatni:
             pozicije = []
             for rec in reci:
-                pozicije.extend(strana.daj_trie().daj_pozicije_reci(rec.strip()))
+                try:
+                    pozicije.extend(strana.daj_trie().daj_pozicije_reci(rec.strip()))
+                except TypeError:
+                    pass
         else:
             pozicije = sortirana[0][2]
         prikaz_najboljeg(strana, reci, pozicije, dodatni)

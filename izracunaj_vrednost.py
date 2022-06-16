@@ -22,12 +22,46 @@ def sredi_unos(rec, za_pretraziti):
             odredi_rang_izraza(reci, za_pretraziti)
         else:
             odredi_rang_rec(reci[0], za_pretraziti)
-    elif "AND" in rec:
-        odredi_rang_and(rec.split("AND"), za_pretraziti)
-    elif "NOT" in rec:
-        odredi_rang_not(rec.split("NOT"), za_pretraziti)
-    elif "OR" in rec:
-        odredi_rang_reci(rec.split(" OR "), za_pretraziti)
+    elif " AND " in rec:
+        lista_reci = rec.split(" ");
+        if len(lista_reci) == 3:
+            los = False
+            for el in lista_reci:
+                if el == "":
+                    los = True
+                    print("Los unos")
+                    break
+            reci = rec.split(" AND ")
+            if not los:
+                odredi_rang_and(rec.split(" AND "), za_pretraziti)
+        else:
+            print("Los unos")
+    elif " NOT " in rec:
+        lista_reci = rec.split(" ");
+        if len(lista_reci) == 3:
+            los = False
+            for el in lista_reci:
+                if el == "":
+                    los = True
+                    print("Los unos")
+                    break
+            if not los:
+                odredi_rang_not(rec.split(" NOT "), za_pretraziti)
+        else:
+            print("Los unos")
+    elif " OR " in rec:
+        lista_reci = rec.split(" ");
+        if len(lista_reci) == 3:
+            los = False
+            for el in lista_reci:
+                if el == "":
+                    los = True
+                    print("Los unos")
+                    break
+            if not los:
+                odredi_rang_reci(rec.split(" OR "), za_pretraziti)
+        else:
+            print("Los unos")
     elif " " in rec:
         odredi_rang_reci(rec.split(" "), za_pretraziti)
     else:
