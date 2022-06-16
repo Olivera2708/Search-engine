@@ -75,7 +75,7 @@ def odredi_rang_not(lista_reci, za_pretraziti):
         if (br_pojavljivanja1 == 0):
             continue
         elif (br_pojavljivanja2 == 0):
-            vrednost = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip()) + broj_linkovanja(strana)
+            vrednost = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip(), za_pretraziti) + broj_linkovanja(strana)
             lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
     if lista_evaluacija == []:
         print("Ne postoji fajl koji sadzi prvu rec a ne sadrzi drugu rec")
@@ -93,9 +93,8 @@ def odredi_rang_and(lista_reci, za_pretraziti):
         if br_pojavljivanja2 == 0:
             continue
         else:
-            vrednost1 = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip())
-            vrednost2 = br_pojavljivanja2 + bitna_linkovanja(strana, lista_reci[1].strip())
-            vrednost = vrednost1//2 + vrednost2//2 + broj_linkovanja(strana)
+            vrednost1 = br_pojavljivanja1 + bitna_linkovanja(strana, lista_reci[0].strip(), za_pretraziti)
+            vrednost = vrednost1 + broj_linkovanja(strana)
         lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
     if lista_evaluacija == []:
         print("Ne postoji fajl koji sadzi obe reci")
@@ -110,11 +109,11 @@ def odredi_rang_reci(lista_reci, za_pretraziti):
         bit_linkovanja = 0
         for rec in lista_reci:
             br_pojavljivanja += broj_pojavljivanja(strana, rec)
-            bit_linkovanja += bitna_linkovanja(strana, rec)
+            bit_linkovanja += bitna_linkovanja(strana, rec, za_pretraziti)
         if br_pojavljivanja == 0:
             continue
         else:
-            vrednost = broj_pojavljivanja(strana, rec)//len(lista_reci) + broj_linkovanja(strana) + bitna_linkovanja(strana, rec)//len(lista_reci)
+            vrednost = br_pojavljivanja//len(lista_reci) + broj_linkovanja(strana) + bit_linkovanja//len(lista_reci)
         lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
     if lista_evaluacija == []:
         print("Reci ne postoje u zadatom direktorijumu")
@@ -129,7 +128,7 @@ def odredi_rang_rec(rec, za_pretraziti):
         if br_pojavljivanja == 0:
             continue
         else:
-            vrednost = broj_pojavljivanja(strana, rec) + broj_linkovanja(strana) + bitna_linkovanja(strana, rec)
+            vrednost = broj_pojavljivanja(strana, rec) + broj_linkovanja(strana) + bitna_linkovanja(strana, rec, za_pretraziti)
         lista_evaluacija.append([vrednost, Evaluacija(strana, vrednost)])
     if lista_evaluacija == []:
         print("Rec ne postoji u zadatom direktorijumu")
@@ -160,11 +159,12 @@ def broj_pojavljivanja(strana, rec):
 def broj_linkovanja(strana):
     return ucitaj_graf.graf.broj_grana_dolaze(strana)
 
-def bitna_linkovanja(strana, rec):
+def bitna_linkovanja(strana, rec, za_pretraziti):
     ukupno = 0
     sve_koje_linkuju = ucitaj_graf.graf.grane_dolaze(strana)
     for s in sve_koje_linkuju:
-        ukupno += broj_pojavljivanja(s, rec)
+        if s in za_pretraziti:
+            ukupno += broj_pojavljivanja(s, rec)
     return ukupno//8
 
 
@@ -178,7 +178,7 @@ def odredi_rang_izraza(lista_reci, za_pretraziti):
         broj_pojavljivanja = len(pozicije)
         if broj_pojavljivanja == 0:
             continue
-        bit_linkovanja = bitna_linkovanja_izraza(strana, lista_reci)
+        bit_linkovanja = bitna_linkovanja_izraza(strana, lista_reci, za_pretraziti)
         ukupno = broj_pojavljivanja * 5 + bit_linkovanja + broj_linkovanja(strana)
         lista_evaluacija.append([ukupno, Evaluacija(strana, ukupno), pozicije])
     if lista_evaluacija == []:
@@ -198,11 +198,12 @@ def pozicije_pojavljivanja(strana, lista_reci):
     else:
         return broj_pojavljivanja_izraza(lista_pojavljivanja)
 
-def bitna_linkovanja_izraza(strana, lista_reci):
+def bitna_linkovanja_izraza(strana, lista_reci, za_pretraziti):
     ukupno = 0
     sve_koje_linkuju = ucitaj_graf.graf.grane_dolaze(strana)
     for s in sve_koje_linkuju:
-        ukupno += len(pozicije_pojavljivanja(s, lista_reci))
+        if s in za_pretraziti:
+            ukupno += len(pozicije_pojavljivanja(s, lista_reci))
     return ukupno//2
 
 def broj_pojavljivanja_izraza(lista_pojavljivanja):
