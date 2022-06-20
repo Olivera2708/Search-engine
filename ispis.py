@@ -41,22 +41,22 @@ def ispisi(sortirana, reci, top = 5, dodatni = False):
                     if unos == "q":
                         return 0
                     elif unos == "":
-                        prikazi_jos_5(sortirana[brojac:])
+                        prikazi_jos_5(sortirana[brojac:], brojac)
                         brojac += 5
                     else:
                         print("Potrebno je pritisnuti enter ili 'q'")
     else:
         print("Ta rec se ne nalazi ni u jednom fajlu na zadatoj putanji")
 
-def prikazi_jos_5(sortirana, top = 5):
+def prikazi_jos_5(sortirana, br):
     global kraj_boje, bela, plava, podvuceno, siva
     brojac = 0
     for evaluacija in sortirana:
-            if brojac == top:
+            if brojac == 5:
                 break
             brojac += 1
             if evaluacija[0] > 0:
-                print(f"{bela}{brojac}. {plava}{podvuceno}{evaluacija[1].daj_stranu().daj_putanju()}{kraj_boje} {siva}---->{kraj_boje} {plava}{evaluacija[0]} rang{kraj_boje}")
+                print(f"{bela}{br+brojac}. {plava}{podvuceno}{evaluacija[1].daj_stranu().daj_putanju()}{kraj_boje} {siva}---->{kraj_boje} {plava}{evaluacija[0]} rang{kraj_boje}")
 
 def prikaz_najboljeg(strana, reci, pozicije, dodatni):
     sve_reci = strana.daj_reci()

@@ -16,8 +16,9 @@ class Evaluacija:
 
     
 def sredi_unos(rec, za_pretraziti):
+    rec = rec.strip()
     if "\"" in rec:
-        reci = rec.replace("\"", "").split(" ")
+        reci = rec.replace("\"", "").strip().split()
         if len(reci) > 1:
             odredi_rang_izraza(reci, za_pretraziti)
         else:
