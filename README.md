@@ -24,6 +24,8 @@ Merge sort is used, adapted for a list of lists.
 For the entered word, I take the number of occurrences of the word in the document, the number of links to the document, as well as the number of occurrences of the word in the document linking to it. I divide the last number by 8.
 By summing these three numbers, I get a rank.
 
+![Preview](images/preview1.png)
+
 2. Words Separated by Space
 
 For each word, I calculate the rank as in 1. and divide by the number of words.
@@ -41,11 +43,8 @@ I check if both words are in the file; if they are, I calculate the rank of both
 
 Same as 2.
 
+![Preview](images/preview2.png)
+
 ## Additional Task (Expression Search)
 For each word, return the positions of occurrences.
 I recursively check if there is a number in the positions of the first word such that the number + 1 is in the position of occurrence of the second word, and similarly for the other words and positions.
-
-## Preview of my implementation
-![Preview](images/preview1.png)
-
-![Preview](images/preview2.png)
