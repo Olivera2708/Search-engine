@@ -1,46 +1,46 @@
-# Opis
+# Description
 
-## Graf (usmeren)
-Sastoji se od cvora i grana.
-U cvoru cuvam putanju do fajla (html stranice), reci na stranici, kao i strukturu Trie koja je nastala od datih reci.
-Grane sluze kako bih povezala cvorove medjusobno (preko linkova).
+## Graph (Directed)
+Consists of nodes and edges.
+In each node, I store the path to the file (HTML page), words on the page, and the structure of a Trie generated from the given words.
+Edges serve to connect nodes together (via links).
 
 ## Trie
-Sastoji se od cvorova.
-Svaki cvor ima karakter, decu i pozicije (na kom mestu u listi reci se nalazi slovo koje cini ovu rec).
+Consists of nodes.
+Each node has a character, children, and positions (the position in the list of words where the letter making up this word is located).
 
-Upisivanje:
-Za svaku rec idem slovo po slovo, gledam da li postoji vec cvor sa tim slovom, ako postoji cuvam poziciju i idem dalje, ako ne postoji pravim cvor sa tim slovom, povezujem ga sa cvorom iznad i cuvam poziciju.
+Insertion:
+For each word, I iterate letter by letter, checking if there is already a node with that letter. If there is, I store the position and proceed; if not, I create a node with that letter, connect it to the node above, and store the position.
 
-Citanje:
-Za svaku rec idem po slovima, ako naidjem da nema cvora koji ima slovo na redu, onda se rec ne nalazi na zadatoj strani, ako dodjem do poslednjeg slova, proverim jel njega ima, ako ima onda vracam pozicije svih pojavljivanja date reci.
+Reading:
+For each word, I iterate through the letters. If I find that there is no node with the letter in question, the word is not present on the specified page. If I reach the last letter, I check if it exists; if it does, I return the positions of all occurrences of the given word.
 
-## Sortiranje
-Koriscen je merge sort, prilagodjen za listu listi.
+## Sorting
+Merge sort is used, adapted for a list of lists.
 
-## Pretraga
-1. Rec
+## Search
+1. Single Word
 
-Za unesenu rec uzmem broj pojavljivanja reci u dokumentu, broj linkovanja na dokument, kao i broj pojavljivanja reci u dokumentu koji ga linkuje, poslednji broj delim sa 8.
-Sabiranjem tri dobijena broja dobijam rang.
+For the entered word, I take the number of occurrences of the word in the document, the number of links to the document, as well as the number of occurrences of the word in the document linking to it. I divide the last number by 8.
+By summing these three numbers, I get a rank.
 
-2. Reci odvojene razmakom
+2. Words Separated by Space
 
-Za svaku rec izracunam rang, kao u 1. i podelim sa brojem reci. 
-Na taj nacin dobijam rang. 
+For each word, I calculate the rank as in 1. and divide by the number of words.
+This way, I obtain a rank.
 
-3. Operator NOT
+3. NOT Operator
 
-Za prvu rec proverim da li je ima u fajlu, ako nema preskacem ga. Ako ima provaravam da li druge reci ima u fajlu, ako ima preskacem, ako nema racunam rang kao u 1. slucaju. 
+For the first word, I check if it exists in the file; if it doesn't, I skip it. If it does, I check if the other words exist in the file; if they do, I skip, if not, I calculate the rank as in case 1.
 
-4. Operator AND
+4. AND Operator
 
-Proveravam da li su obe reci u fajlu, ako jesu racunam rang obe reci odvojeno i rezultate saberem i podelim sa 2.
+I check if both words are in the file; if they are, I calculate the rank of both words separately and sum the results, then divide by 2.
 
-5. Operator OR
+5. OR Operator
 
-Isto kao 2.
+Same as 2.
 
-# Dodatni zadatak (pretraga izraza)
-Za svaku rec vrati pozicije pojavljivanja. 
-Proveravam rekurzivno da li postoji neki broj u pozicijama pojavljivanja prve reci, tako da se broj+1 nalazi u poziciji pojavljivanja druge reci, pa analogno za ostale reci i pozicije. 
+# Additional Task (Expression Search)
+For each word, return the positions of occurrences.
+I recursively check if there is a number in the positions of the first word such that the number + 1 is in the position of occurrence of the second word, and similarly for the other words and positions.
