@@ -45,8 +45,7 @@ Same as 2.
 For each word, return the positions of occurrences.
 I recursively check if there is a number in the positions of the first word such that the number + 1 is in the position of occurrence of the second word, and similarly for the other words and positions.
 
-##Preview of my implementation
+## Preview of my implementation
 ![Preview](images/preview1.png)
-
 
 ![Preview](images/preview2.png)
